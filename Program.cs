@@ -17,7 +17,7 @@ namespace Arcade
     {
         private int width;
         private int height;
-        SpaceShip spaceship1,spaceship2;
+        Paddle paddle;
         Board board;
         ConsoleKeyInfo keyInfo;
         ConsoleKey consoleKey;
@@ -29,8 +29,7 @@ namespace Arcade
         }
         public void Setup()
         {
-            spaceship1 = new SpaceShip(width,height);
-            spaceship2 = new SpaceShip(width, 5);
+            paddle = new Paddle(width,height,10);
             keyInfo = new ConsoleKeyInfo();
             consoleKey = new ConsoleKey();
         }
@@ -44,7 +43,6 @@ namespace Arcade
         }
         public void Run()
         {
-            int i=20;
             while (true)
             {
                 Console.Clear();
@@ -53,27 +51,19 @@ namespace Arcade
                 while (true)
                 {
                     Input();
-                    switch (consoleKey)
+                   switch (consoleKey)
                     {
                         case ConsoleKey.A:
-                            spaceship1.moveLeft();
+                            paddle.moveLeft();
                             break;
                         case ConsoleKey.D:
-                            spaceship1.moveRight();
+                            paddle.moveRight();
                             break;
-                        case ConsoleKey.LeftArrow:
-                            spaceship2.moveLeft();
-                            break;
-                        case ConsoleKey.RightArrow:
-                            spaceship2.moveRight();
-                            break;
+                       
                     }
                     consoleKey = ConsoleKey.X;
 
-                    spaceship1.WriteSpaceShip();
-                    spaceship1.WriteFlame();
-                    spaceship2.WriteSpaceShip();
-                    spaceship2.WriteFlame();
+                    paddle.WritePaddle();
                     Thread.Sleep(1000/60);
                 }
             }
