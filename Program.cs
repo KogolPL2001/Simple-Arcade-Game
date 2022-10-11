@@ -19,6 +19,7 @@ namespace Arcade
         private int height;
         Paddle paddle;
         Board board;
+        Enemy enemy;
         ConsoleKeyInfo keyInfo;
         ConsoleKey consoleKey;
         public Arcade(int width, int height)
@@ -32,6 +33,7 @@ namespace Arcade
             paddle = new Paddle(width,height,10);
             keyInfo = new ConsoleKeyInfo();
             consoleKey = new ConsoleKey();
+            enemy = new Enemy(width-1, height/4);
         }
         public void Input()
         {
@@ -48,6 +50,7 @@ namespace Arcade
                 Console.Clear();
                 Setup();
                 board.WriteBoard();
+                enemy.WriteEnemy();
                 while (true)
                 {
                     Input();
@@ -62,7 +65,6 @@ namespace Arcade
                        
                     }
                     consoleKey = ConsoleKey.X;
-
                     paddle.WritePaddle();
                     Thread.Sleep(1000/60);
                 }
