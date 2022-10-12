@@ -2,31 +2,97 @@
 
 namespace Arcade
 {
-    public class Enemy
+    public class Ball
     {
-        private char[,] body;
-        private int width,height;
-        public Enemy(int width,int height)
+        private char body;
+        private int cursorX, cursorY;
+        private int boardwidth,boardheight;
+        private int directionX, directionY;
+        Random r = new Random();
+        int rInt;
+        public Ball(int width,int height)
         {
-            body = new char[width, height];
-            this.width = width;
-            this.height = height;
-            for(int i=0;i<width;i++)
-            {
-                for (int j = 0; j < height; j++)
-                    body[i, j] = 'O';
-            }
+            body = '■';
+            this.boardwidth = width;
+            this.boardheight = height;
+            cursorX = width / 2;
+            cursorY = height / 2;
+            directionX = 1;
+            directionY = 1;
         }
-        public void WriteEnemy()
+        public int getcursorY() { return cursorY; }
+        public void Logic(Paddle paddle)
         {
-            for (int i = 0; i <width; i++)
+            Console.SetCursorPosition(cursorX, cursorY);
+            if(cursorY != paddle.getcursorY())
             {
-                for (int j = 0; j <height; j++)
+                    Console.Write(' ');
+            }
+            else if (cursorX < paddle.getcursorX() || cursorX > paddle.getcursorX() + paddle.getpaddleWidth())
+                Console.Write(' ');
+            if (cursorX==1||cursorX==boardwidth-1)
+            {
+                directionX *= -1;
+            }
+            if(cursorY==1||cursorY==boardheight-1)
+            {
+                directionY *= -1;
+                changeXdiraction();
+            }
+            if (cursorY == paddle.getcursorY())
+            {
+                if (cursorX > paddle.getcursorX() && cursorX < paddle.getcursorX() + paddle.getpaddleWidth())
                 {
-                    Console.SetCursorPosition(i + 1, j+1);
-                    Console.Write(body[i, j]);
+                    directionY *= -1;
+                    changeXdiraction();
                 }
             }
+            if(directionX==1)
+            {
+                cursorX++;
+            }
+            else if(directionX==-1)
+            {
+                cursorX--;
+            }
+            if(directionY==1)
+            {
+                cursorY++;
+            }
+            else
+            {
+                cursorY--;
+            }
+        }
+        private void changeXdiraction()
+        {
+            rInt = r.Next(0, 3);
+            switch (rInt)
+            {
+                case 0:
+                    directionX = 0;
+                    break;
+                case 1:
+                    if (directionX == 0 && cursorX == boardwidth - 1)
+                        directionX = -1;
+                    else if (directionX == 0 && cursorX == 1)
+                        directionX = 1;
+                    else
+                        directionX = -1;
+                    break;
+                case 2:
+                        directionX = 1;
+                    break;
+            }
+            if (cursorX == boardwidth - 1)
+                directionX = -1;
+            if (cursorX == 1)
+                directionX = 1;
+        }
+        public void WriteBall()
+        {
+            Console.SetCursorPosition(cursorX, cursorY);
+            Console.Write(body);
         }
     }
     public class Paddle
@@ -47,6 +113,18 @@ namespace Arcade
             this.width = width;
             this.height = height;
             this.paddleWidth = paddleWidth;
+        }
+        public int getcursorX()
+        {
+            return cursorX;
+        }
+        public int getcursorY()
+        {
+            return cursorY;
+        }
+        public int getpaddleWidth()
+        {
+            return paddleWidth;
         }
         public void moveLeft()
         {

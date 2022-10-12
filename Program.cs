@@ -20,6 +20,7 @@ namespace Arcade
         Paddle paddle;
         Board board;
         Enemy enemy;
+        Ball ball;
         ConsoleKeyInfo keyInfo;
         ConsoleKey consoleKey;
         public Arcade(int width, int height)
@@ -27,6 +28,7 @@ namespace Arcade
             this.width = width;
             this.height = height;
             board = new Board(width, height);
+            ball = new Ball(width, height);
         }
         public void Setup()
         {
@@ -45,16 +47,17 @@ namespace Arcade
         }
         public void Run()
         {
-            while (true)
+            int i = 0;
+            while (true)//ball.getcursorY() != height - 1) 
             {
                 Console.Clear();
                 Setup();
                 board.WriteBoard();
-                enemy.WriteEnemy();
-                while (true)
+                //enemy.WriteEnemy();
+                while (true)//ball.getcursorY() != height - 1) 
                 {
                     Input();
-                   switch (consoleKey)
+                    switch (consoleKey)
                     {
                         case ConsoleKey.A:
                             paddle.moveLeft();
@@ -62,13 +65,22 @@ namespace Arcade
                         case ConsoleKey.D:
                             paddle.moveRight();
                             break;
-                       
+
                     }
                     consoleKey = ConsoleKey.X;
                     paddle.WritePaddle();
+                    if (i == 2)
+                    {
+                        ball.Logic(paddle);
+                        ball.WriteBall();
+                        i = 0;
+                    }
+                    i++;
                     Thread.Sleep(1000/60);
                 }
             }
+            Console.Clear();
+            Console.WriteLine("Gameover");
         }
     }
 }
