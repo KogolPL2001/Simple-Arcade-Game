@@ -6,13 +6,12 @@ namespace Arcade
     public class Ball
     {
         private char body;
-        private int points;
         private int cursorX, cursorY;
         private int boardwidth,boardheight;
         private int directionX, directionY;
         Random r = new Random();
         int rInt;
-        public Ball(int width,int height)
+        public Ball(int width,int height,ref int points)
         {
             body = '■';
             points = 0;
@@ -24,14 +23,14 @@ namespace Arcade
             directionY = 1;
         }
         public int getcursorY() { return cursorY; }
-        private void WritePoints()
+        private void WritePoints(ref int points)
         {
             Console.SetCursorPosition(boardwidth+5, 5);
             Console.Write("Points: " + points);
         }
-        public void Logic(Paddle paddle)
+        public void Logic(Paddle paddle,ref int points)
         {
-            WritePoints();
+            WritePoints(ref points);
             Console.SetCursorPosition(cursorX, cursorY);
             if(cursorY != paddle.getcursorY())
             {

@@ -7,6 +7,7 @@ namespace Arcade
     {
         private int width;
         private int height;
+        private int points;
         Paddle paddle;
         Board board;
         Enemy enemy;
@@ -17,8 +18,9 @@ namespace Arcade
         {
             this.width = width;
             this.height = height;
+            points = 0;
             board = new Board(width, height);
-            ball = new Ball(width, height);
+            ball = new Ball(width, height,ref points);
         }
         public void Setup()
         {
@@ -50,9 +52,11 @@ namespace Arcade
                     switch (consoleKey)
                     {
                         case ConsoleKey.A:
+                        case ConsoleKey.LeftArrow:
                             paddle.moveLeft();
                             break;
                         case ConsoleKey.D:
+                        case ConsoleKey.RightArrow:
                             paddle.moveRight();
                             break;
 
@@ -61,7 +65,7 @@ namespace Arcade
                     paddle.WritePaddle();
                     if (i == 2)
                     {
-                        ball.Logic(paddle);
+                        ball.Logic(paddle,ref points);
                         ball.WriteBall();
                         i = 0;
                     }
@@ -78,6 +82,7 @@ namespace Arcade
     |_____|__|__|_|_|_|_____|  |_____|\___/|_____|__|__|
                                                         
 ");
+            Console.WriteLine("                     Points: "+points);
             Console.WriteLine("         Press any key to exit to the main menu.");
             Console.ReadKey(true);
             return;

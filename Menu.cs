@@ -70,9 +70,9 @@ namespace Arcade
         {
             Console.Clear();
             WriteTheme();
-            Console.WriteLine("This game was created by Kornel Golebiewski for studies project.");
-            Console.WriteLine("Nothing to see here.");
-            Console.WriteLine("Press any key to return to the main menu.");
+            Console.WriteLine("     This game was created by Kornel Golebiewski for studies project.");
+            Console.WriteLine("     Nothing to see here.");
+            Console.WriteLine("     Press any key to return to the main menu.");
             Console.ReadKey(true);
             return;
         }
@@ -80,7 +80,7 @@ namespace Arcade
         {
             Console.Clear();
             WriteTheme();
-            Console.WriteLine("Press any key to exit the game.");
+            Console.WriteLine("         Press any key to exit the game.");
             Console.ReadKey(true);
             Environment.Exit(0);
         }
